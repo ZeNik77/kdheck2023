@@ -17,8 +17,7 @@ def register(request):
         card_period = request.POST.get('card_period')
         card_cvv = request.POST.get('card_cvv')
         user_password = request.POST.get('user_password')
-        print(username, card_num, card_period, card_cvv, user_password)
-
+        # print(username, card_num, card_period, card_cvv, user_password)
         User.objects.create(username=username, card_num=card_num, card_period=card_period, card_cvv=card_cvv, password=user_password)
         return HttpResponseRedirect(reverse('parkapp:login'))
 
@@ -50,10 +49,15 @@ def register_admin(request):
 
 def login(request):
     if request.method == 'POST':
-        card_username = request.POST.get('card_username')
-        password = request.POST.get('password')
-        user = auth.authenticate(card_username=card_username, password=password)
-        if user:
-            auth.login(request, user)
-            return HttpResponseRedirect(reverse('parkapp:index'))
-    return render(request, 'parkapp/login.html')
+        username = request.POST['username']
+        password = request.POST['password']
+        try:
+            user = User.objects.get(username=username, password=password)
+            if user:
+                print('шалава')
+                auth.login(request, user)
+                return redirect(reverse('parkapp:index'))
+        except:
+            return render(request, 'parkapp/login.html', {'error': 'СОСИ'})
+    else:
+        return render(request, 'parkapp/login.html')
