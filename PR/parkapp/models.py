@@ -10,7 +10,7 @@ class User(models.Model):
 
 
 class Parking(models.Model):
-    address = models.CharField(max_lenght=120)
+    address = models.CharField(max_length=120)
     registry_nubmer = models.PositiveIntegerField()
     max_parking_spaces = models.PositiveIntegerField()
     occupied_places = models.PositiveIntegerField()
