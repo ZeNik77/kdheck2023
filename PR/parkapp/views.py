@@ -16,7 +16,6 @@ def zapolnit():
 '''
 
 def index(request):
-    zapolnit()
     return render(request, 'parkapp/index.html')
 
 
