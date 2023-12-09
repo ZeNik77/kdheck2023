@@ -8,5 +8,8 @@
 </head>
 <body text="blue">
     <h1>{{ request.user }}</h1>
+    <p>{% for el in parking %}
+        {{el.address}}<br>
+    {% endfor %}</p>
 </body>
 </html>

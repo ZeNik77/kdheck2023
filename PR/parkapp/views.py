@@ -16,7 +16,7 @@ def zapolnit():
 '''
 
 def index(request):
-    return render(request, 'parkapp/index.html')
+    return render(request, 'parkapp/index.html', {'parking': Parking.objects.all()})
 
 
 def register(request):
@@ -75,4 +75,5 @@ def login(request):
             return render(request, 'parkapp/login.html', {'error': 'СОСИ'})
     else:
         return render(request, 'parkapp/login.html')
+
 
