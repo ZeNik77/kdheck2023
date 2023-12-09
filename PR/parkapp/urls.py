@@ -1,10 +1,13 @@
 from django.urls import path
-from . import views
+from parkapp.views import *
+
+
 app_name = 'parkapp'
 
 urlpatterns = [
-    path('register', views.register, name='register'),
-    path('register_admin', views.register_admin, name='register_admin'),
-    path('register_cuckold', views.register_cuckold, name='register_cuckold'),
-    path('login', views.login, name='login'),
+    path('', index, name='index'),
+    path('register', register, name='register'),
+    path('register_admin', register_admin, name='register_admin'),
+    path('register_cuckold', register_cuckold, name='register_cuckold'),
+    path('login', login, name='login'),
 ]

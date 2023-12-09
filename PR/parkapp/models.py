@@ -1,13 +1,13 @@
 from django.db import models
+from django.contrib.auth.models import AbstractUser
 
 
-class User(models.Model):
-    card_name = models.CharField(max_length=20)
+class User(AbstractUser):
     card_num = models.PositiveBigIntegerField(default=0)
     card_period = models.PositiveIntegerField(default=0)
     card_cvv = models.PositiveIntegerField(default=0)
     rights = models.IntegerField(default=0)
-    name = models.CharField(max_length=20)
+    username = models.CharField(max_length=20, unique=True)
     password = models.CharField(max_length=20)
     park_id = models.IntegerField(default=0)
     
