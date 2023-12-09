@@ -2,20 +2,22 @@ from django.db import models
 
 
 class User(models.Model):
-    username = models.CharField(max_length=20)
-    card_number = models.PositiveBigIntegerField(max_length=16)
-    cvv = models.PositiveIntegerField(max_length=3)
-    validity_period = models.PositiveIntegerField(max_length=4)
-    rights = models.CharField(max_length=20)
-
+    card_name = models.CharField(max_length=20)
+    card_num = models.PositiveBigIntegerField()
+    card_period = models.PositiveIntegerField()
+    card_cvv = models.PositiveIntegerField()
+    rights = models.IntegerField()
+    name = models.CharField(max_length=20)
+    password = models.CharField(max_length=20)
+    coupon_id = models.BigIntegerField()
 
 class Parking(models.Model):
-    address = models.CharField(max_length=120)
-    registry_nubmer = models.PositiveIntegerField()
-    max_parking_spaces = models.PositiveIntegerField()
-    occupied_places = models.PositiveIntegerField()
-    price_per_minute = models.PositiveIntegerField()
-    free_time = models.PositiveIntegerField()
+    address = models.CharField(max_length=120, default='')
+    registry_nubmer = models.PositiveIntegerField(default=9999)
+    max_parking_spaces = models.PositiveIntegerField(default=9999)
+    occupied_places = models.PositiveIntegerField(default=9999)
+    price_per_minute = models.PositiveIntegerField(default=9999)
+    free_time = models.PositiveIntegerField(default=40)
 
 
 class Reciept(models.Model):
