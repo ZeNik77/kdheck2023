@@ -3,13 +3,13 @@ from django.db import models
 
 class User(models.Model):
     card_name = models.CharField(max_length=20)
-    card_num = models.PositiveBigIntegerField()
-    card_period = models.PositiveIntegerField()
-    card_cvv = models.PositiveIntegerField()
-    rights = models.IntegerField()
+    card_num = models.PositiveBigIntegerField(default=0)
+    card_period = models.PositiveIntegerField(default=0)
+    card_cvv = models.PositiveIntegerField(default=0)
+    rights = models.IntegerField(default=0)
     name = models.CharField(max_length=20)
     password = models.CharField(max_length=20)
-    park_id = models.IntegerField(default=-1)
+    park_id = models.IntegerField(default=0)
     
 
 class Parking(models.Model):
