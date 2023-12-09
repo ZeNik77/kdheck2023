@@ -1,4 +1,6 @@
 from django.shortcuts import render, redirect
+from django.contrib import auth
+
 
 def index(request):
     pass
@@ -14,10 +16,10 @@ def register_admin(request):
     return render(request, 'parkapp/register_admin.html')
 
 def login(request):
-    pass
-
-def login_cuckold(request):
-    pass
-
-def login_admin(request):
-    pass
+    if request.method == 'POST':
+        card_name = request.POST.get('card_name')
+        password = request.POST.get('password')
+        user = auth.authenticate(card_name=card_name, password=password)
+        if user:
+            auth.login(request, user)
+            return redirect('/')

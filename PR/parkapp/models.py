@@ -5,11 +5,12 @@ class User(models.Model):
     card_name = models.CharField(max_length=20)
     card_num = models.PositiveBigIntegerField()
     card_period = models.PositiveIntegerField()
-    card_cvv = models.PositiveIntegerField()
-    rights = models.IntegerField()
-    name = models.CharField(max_length=20)
+    card_cvv = models.IntegerField(default=0)
+    rights = models.IntegerField(default=0)
     password = models.CharField(max_length=20)
-    coupon_id = models.BigIntegerField()
+    coupon_id = models.IntegerField(default=-1)
+    park_id = models.IntegerField(defalult=-1)
+    
 
 class Parking(models.Model):
     address = models.CharField(max_length=120, default='')
