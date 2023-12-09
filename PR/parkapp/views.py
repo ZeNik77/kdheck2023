@@ -7,7 +7,6 @@ from django.shortcuts import render, redirect, HttpResponseRedirect
 
 
 def index(request):
-
     return render(request, 'parkapp/index.html')
 
 def register(request):
@@ -27,25 +26,31 @@ def register(request):
 def register_cuckold(request):
     if request.method == 'POST':
         user = request.user
+        print(user)
         admins = User.objects.filter(rights=2)
         if user in admins:
             username = request.POST.get('username')
             password = request.POST.get('password')
-            park_id = request.POST.get('parkid')
-            User.objects.create(username=username, password=password, park_id=park_id)
+            park_id = request.POST.get('park_id')
+            User.objects.create(username=username, password=password, park_id=park_id, rights=1)
             return HttpResponseRedirect(reverse('parkapp:login'))
         else:
-            return render('parkapp/poshelvon.html')
+            return render(request, 'parkapp/poshelvon.html')
+    return render(request, 'parkapp/register_cuckold.html')
 
 def register_admin(request):
     if request.method == 'POST':
-        admin_fio = request.POST.get('admin_fio')
-        admin_password = request.POST.get('admin_passord')
-        rights = 2
-        User.objects.create(username=admin_fio, password=admin_password, rights=rights)
-        return HttpResponseRedirect(reverse('parkapp:login'))
-    else:
-        return render(request, 'parkapp/register_admin.html')
+        user = request.user
+        print(user)
+        admins = User.objects.filter(rights=2)
+        if user in admins:
+            username = request.POST.get('username')
+            password = request.POST.get('password')
+            User.objects.create(username=username, password=password, rights=2)
+            return HttpResponseRedirect(reverse('parkapp:login'))
+        else:
+            return render(request, 'parkapp/poshelvon.html')
+    return render(request, 'parkapp/register_admin.html')
 
 def login(request):
     if request.method == 'POST':
