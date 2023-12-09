@@ -10,15 +10,21 @@ class User(AbstractUser):
     username = models.CharField(max_length=20, unique=True)
     password = models.CharField(max_length=20)
     park_id = models.IntegerField(default=0)
+
+    def __str__(self) -> str:
+        return f'{self.username} | {self.rights}'
     
 
 class Parking(models.Model):
     address = models.CharField(max_length=120, default='')
-    registry_nubmer = models.PositiveIntegerField(default=9999)
-    max_parking_spaces = models.PositiveIntegerField(default=9999)
-    occupied_places = models.PositiveIntegerField(default=9999)
-    price_per_minute = models.PositiveIntegerField(default=9999)
-    free_time = models.PositiveIntegerField(default=40)
+    registry_nubmer = models.PositiveIntegerField(default=0)
+    max_parking_spaces = models.PositiveIntegerField(default=0)
+    occupied_places = models.PositiveIntegerField(default=0)
+    price_per_minute = models.PositiveIntegerField(default=0)
+    free_time = models.PositiveIntegerField(default=15)
+
+    def __str__(self) -> str:
+        return f'{self.address} | {self.max_parking_spaces}'
 
 
 class Reciept(models.Model):
@@ -27,4 +33,7 @@ class Reciept(models.Model):
     start_time = models.DateTimeField()
     finish_time = models.DateTimeField()
     benefit = models.BooleanField(default=False)
+
+    def __str__(self) -> str:   
+        return f'{self.start_time} | {self.user_id}'
 

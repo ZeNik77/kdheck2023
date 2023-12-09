@@ -1,13 +1,24 @@
 from django.shortcuts import render, redirect
 from django.contrib import auth
-from .models import *
+from parkapp.models import *
 from django.urls import reverse
 
 from django.shortcuts import render, redirect, HttpResponseRedirect
 
+'''
+def zapolnit():
+    with open('./123.txt', 'r', encoding='utf-8') as f:
+        s = [el.strip().split('\t') for el in f.readlines()]
+    s2 = []
+    for el in s:
+        s2.append([el[3], el[5]])
+    print(s2)
+'''
 
 def index(request):
+    zapolnit()
     return render(request, 'parkapp/index.html')
+
 
 def register(request):
     if request.method == 'POST':
@@ -59,10 +70,10 @@ def login(request):
         try:
             user = User.objects.get(username=username, password=password)
             if user:
-                print('шалава')
                 auth.login(request, user)
                 return redirect(reverse('parkapp:index'))
         except:
             return render(request, 'parkapp/login.html', {'error': 'СОСИ'})
     else:
         return render(request, 'parkapp/login.html')
+
