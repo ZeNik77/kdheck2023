@@ -27,7 +27,11 @@ def index(request):
             parking = Parking.objects.get(pk=reciept.parking_id.pk)
             dif = (reciept.finish_time.replace(tzinfo=None) - reciept.start_time.replace(tzinfo=None))
             dif = dif.total_seconds()
-            reciept.final_price = int(parking.price_per_minute * dif // 60)
+            minutes = int(parking.price_per_minute * dif // 60)
+            if minutes <= 15:
+                reciept.final_price = 0
+            else:
+                reciept.final_price = int(parking.price_per_minute * dif // 60)
             print(reciept.final_price)
             reciept.save()
 
