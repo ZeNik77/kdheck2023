@@ -7,6 +7,21 @@
     <title>Document</title>
 </head>
 <body text="blue">
+    {% if not reciepts %}
+    <form method="post" action="/">
+        {% csrf_token %}
+        <input type="text" name="park_id">E
+        <button type="text" name="create_park">
+    </form>
+    {% else %}
+    {% for el in reciepts %}
+    <form method="post" action="/">
+        {% csrf_token %}
+        {{ el }}
+        <input type="submit" value="{{el.pk}}" name="end_park">
+    </form>
+    {% endfor %}
+    {% endif %}
     <h1>{{ request.user }}</h1>
     <p>{% for el in parking %}
         {{el.address}}<br>

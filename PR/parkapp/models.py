@@ -30,8 +30,9 @@ class Parking(models.Model):
 class Reciept(models.Model):
     parking_id = models.ForeignKey(Parking, on_delete=models.CASCADE)
     user_id = models.ForeignKey(User, on_delete=models.CASCADE)
-    start_time = models.DateTimeField()
-    finish_time = models.DateTimeField()
+    start_time = models.DateTimeField(default=None)
+    finish_time = models.DateTimeField(default=None)
+    final_price = models.BigIntegerField(default=-1)
     benefit = models.BooleanField(default=False)
 
     def __str__(self) -> str:   

@@ -2,21 +2,37 @@ from django.shortcuts import render, redirect
 from django.contrib import auth
 from parkapp.models import *
 from django.urls import reverse
+import random
+import datetime
 
 from django.shortcuts import render, redirect, HttpResponseRedirect
 
-'''
-def zapolnit():
-    with open('./123.txt', 'r', encoding='utf-8') as f:
-        s = [el.strip().split('\t') for el in f.readlines()]
-    s2 = []
-    for el in s:
-        s2.append([el[3], el[5]])
-    print(s2)
-'''
 
 def index(request):
-    return render(request, 'parkapp/index.html', {'parking': Parking.objects.all()})
+    if request.method == 'POST':
+        if 'create_park' in request.POST:
+            user = request.user
+            park_id = request.POST.get('park_id')
+            parkings = Parking.objects.filter(pk=park_id)
+            if parkings:
+                parking = parkings[0]
+                print(park_id)
+                starttime = datetime.datetime.now()
+                Reciept.objects.create(parking_id=parking, user_id=user, start_time=starttime, finish_time=starttime)
+        elif 'end_park' in request.POST:
+            reciept_id = request.POST.get('end_park')
+            reciept = Reciept.objects.get(pk=reciept_id)
+            reciept.finish_time = datetime.datetime.now()
+            # print(reciept.parking_id)
+            parking = Parking.objects.get(pk=reciept.parking_id.pk)
+            dif = (reciept.finish_time.replace(tzinfo=None) - reciept.start_time.replace(tzinfo=None))
+            dif = dif.total_seconds()
+            reciept.final_price = int(parking.price_per_minute * dif // 60)
+            print(reciept.final_price)
+            reciept.save()
+
+    reciepts = Reciept.objects.filter(user_id=request.user, final_price=-1)
+    return render(request, 'parkapp/index.html', {'parking': Parking.objects.all(), 'reciepts': reciepts})
 
 
 def register(request):
@@ -77,3 +93,5 @@ def login(request):
         return render(request, 'parkapp/login.html')
 
 
+def pizdec(request):
+    return render(request, 'parkapp/pizdec.html')
